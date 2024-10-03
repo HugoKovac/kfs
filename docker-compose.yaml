@@ -1,0 +1,8 @@
+services:
+  sandbox:
+    build: .
+    platform: linux/amd64
+    volumes:
+      - "./obj:/root/obj"
+      - "./iso:/root/iso"
+    command: make
