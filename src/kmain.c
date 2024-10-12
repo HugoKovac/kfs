@@ -1,4 +1,7 @@
-int sum_of_three(int arg1, int arg2, int arg3)
-{
-    return arg1 + arg2 + arg3;
+#include "kmain.h"
+
+void kmain(){
+    s_vga_terminal vga = {0, 0, 0, (uint16_t*)VGA_BUFF_ADDR};
+    terminal_init(&vga);
+    terminal_putstr("42-kfs-1\nBy hkovac", &vga);
 }

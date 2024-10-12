@@ -5,26 +5,32 @@ MAGIC_NUMBER    equ 0x1BADB002
 FLAGS           equ 0x0
 CHECKSUM        equ -MAGIC_NUMBER
 
-section .text:
+section .text
 align 4
     dd MAGIC_NUMBER
     dd FLAGS
     dd CHECKSUM
 
-section .bss:
+section .bss
 align 4
 kernel_stack:
     resb KERNEL_STACK_SIZE
 
+section .data
+    ; Initialized data goes here
+
+section .rodata
+    ; Read-only data such as string literals go here
+
+section .text
 loader:
-    ;mov eax, 0xCAFEBABE
+    ; Set up stack
     mov esp, kernel_stack + KERNEL_STACK_SIZE
 
+    ; Call the kernel main function
+    extern kmain
+    call kmain
 
 .loop:
-    extern sum_of_three
-    push dword 3
-    push dword 2
-    push dword 1
-    call sum_of_three
+    hlt
     jmp .loop
