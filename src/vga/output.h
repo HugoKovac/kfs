@@ -6,6 +6,7 @@
 #define VGA_HEIGHT = 25;
 
 #include "../utils.h"
+#include "./cursor.h"
 
 
 typedef enum vga_color {
@@ -36,8 +37,9 @@ typedef struct vga_terminal
     uint16_t *buffer;
 }__attribute__((packed)) s_vga_terminal;
 
-void terminal_init(s_vga_terminal *vga);
-void terminal_putstr(char *str, s_vga_terminal *vga);
+void terminal_init();
+void terminal_putstr(char *str);
+void terminal_putchar(char c);
 
 
 #endif

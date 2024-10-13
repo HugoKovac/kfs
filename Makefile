@@ -2,16 +2,16 @@
 OBJ_DIR = ./obj
 SRC_C_DIR = ./src
 SRC_ASM_DIR = ./src
-OBJ_DIRS = $(OBJ_DIR)/vga $(OBJ_DIR)/gdt
+OBJ_DIRS = $(OBJ_DIR)/vga $(OBJ_DIR)/gdt $(OBJ_DIR)/interrupts
 
 
-SRC_C = kmain.c vga/output.c
-SRC_ASM = loader.s
+SRC_C = kmain.c vga/output.c vga/cursor.c interrupts/idt.c
+SRC_ASM = loader.asm utils.asm interrupts/idt_asm.asm
 
 FULL_SRC_C = $(addprefix $(SRC_C_DIR)/, $(SRC_C))
 FULL_OBJ_C = $(addprefix $(OBJ_DIR)/, $(SRC_C:.c=.o))
 FULL_SRC_ASM = $(addprefix $(SRC_ASM_DIR)/, $(SRC_ASM))
-FULL_OBJ_ASM = $(addprefix $(OBJ_DIR)/, $(SRC_ASM:.s=.o))
+FULL_OBJ_ASM = $(addprefix $(OBJ_DIR)/, $(SRC_ASM:.asm=.o))
 
 CC = gcc
 CFLAGS = -g -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
@@ -38,6 +38,7 @@ iso: $(OBJ_DIR)/kernel.elf
 $(OBJ_DIRS):
 	mkdir -p $(OBJ_DIR)/vga
 	mkdir -p $(OBJ_DIR)/gdt
+	mkdir -p $(OBJ_DIR)/interrupts
 
 $(OBJ_DIR)/kernel.elf: $(OBJ_DIRS) $(FULL_OBJ_ASM) $(FULL_OBJ_C)
 	ld $(LDFLAGS) $(FULL_OBJ_ASM) $(FULL_OBJ_C) -o $@
@@ -45,7 +46,7 @@ $(OBJ_DIR)/kernel.elf: $(OBJ_DIRS) $(FULL_OBJ_ASM) $(FULL_OBJ_C)
 $(OBJ_DIR)/%.o: $(SRC_C_DIR)/%.c
 	$(CC) $(CFLAGS) $< -o $@
 
-$(OBJ_DIR)/%.o: $(SRC_ASM_DIR)/%.s
+$(OBJ_DIR)/%.o: $(SRC_ASM_DIR)/%.asm
 	$(AS) $(ASFLAGS) $< -o $@
 
 clean:

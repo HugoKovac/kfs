@@ -3,5 +3,6 @@
 
 // #include "gdt.h"
 #include "./vga/output.h"
+#include "./interrupts/idt.h"
 
 #endif

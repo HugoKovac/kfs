@@ -8,4 +8,6 @@ typedef char uint8_t;
 typedef short uint16_t;
 typedef long uint32_t;
 
+void outb(unsigned short port, unsigned char data);
+
 #endif
