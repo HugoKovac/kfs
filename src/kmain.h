@@ -1,6 +1,7 @@
 #ifndef KMAIN_H
 #define KMAIN_H
 
-#include "output.h"
+// #include "gdt.h"
+#include "./vga/output.h"
 
 #endif

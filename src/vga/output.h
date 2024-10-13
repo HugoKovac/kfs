@@ -5,11 +5,7 @@
 #define VGA_WIDTH = 80;
 #define VGA_HEIGHT = 25;
 
-#define DEBUG_PRINT(param_format, ...) \
-    debug_print(__FUNCTION__, __FILE__, __LINE__, param_format, ##__VA_ARGS__)
-
-typedef char uint8_t;
-typedef short uint16_t;
+#include "../utils.h"
 
 
 typedef enum vga_color {
@@ -29,7 +25,7 @@ typedef enum vga_color {
 	VGA_COLOR_LIGHT_MAGENTA,
 	VGA_COLOR_LIGHT_BROWN,
 	VGA_COLOR_WHITE,
-} e_vga_color;
+}__attribute__((packed)) e_vga_color;
 
 
 typedef struct vga_terminal
@@ -38,7 +34,7 @@ typedef struct vga_terminal
     unsigned int column;
     uint8_t color;
     uint16_t *buffer;
-} s_vga_terminal;
+}__attribute__((packed)) s_vga_terminal;
 
 void terminal_init(s_vga_terminal *vga);
 void terminal_putstr(char *str, s_vga_terminal *vga);
